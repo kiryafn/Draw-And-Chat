@@ -1,14 +1,17 @@
 package ui;
 
+import data.Fonts;
 import data.Pallet;
 
 import javax.swing.*;
 import java.awt.*;
+import java.security.KeyStore;
 
 
 public class MenuView extends JFrame {
     public MenuView() {
         configure();
+        configureTitle();
     }
 
     private void configure(){
@@ -22,10 +25,11 @@ public class MenuView extends JFrame {
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
     }
 
-    private void configureTitle(){
+    private void configureTitle() {
         JLabel title = new JLabel("Draw Together");
-        title.setFont(new MontserratFont());
-        title.setForeground(Pallet.MESSAGE.value());
+        title.setVisible(true);
+        title.setHorizontalAlignment(SwingConstants.CENTER);
         add(title);
+        title.setVerticalAlignment(SwingConstants.CENTER);
     }
 }

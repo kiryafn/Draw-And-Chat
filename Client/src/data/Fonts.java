@@ -14,7 +14,7 @@ public enum Fonts {
     /**
      * The MONTSERRAT font instance loaded from the "resources/fonts/Montserrat-Regular.ttf" file.
      */
-    MONTSERRAT(loadFont("resources/fonts/Montserrat-Regular.ttf"));
+    MONTSERRAT(loadFont("/resources/fonts/Montserrat-Regular.ttf"));
 
     /**
      * The {@code Font} instance associated with the enum constant.
@@ -51,12 +51,14 @@ public enum Fonts {
             File fontFile = new File(path);
             if (!fontFile.exists()) {
                 System.err.println("Font file not found: " + path);
-                return new Font("Serif", Font.PLAIN, 12); // fallback font
+                return new Font("Serif", Font.PLAIN, 20); // fallback font
             }
-            return Font.createFont(Font.TRUETYPE_FONT, fontFile);
+            Font toReturn = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+            toReturn.deriveFont(Font.PLAIN, 60);
+            return toReturn;
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
-            return new Font("Serif", Font.PLAIN, 12); // fallback font
+            return new Font("Serif", Font.PLAIN, 20); // fallback font
         }
     }
 }

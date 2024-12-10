@@ -1,9 +1,12 @@
-package data;
+package domain;
+
+import data.Client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 
 public class MessageListener implements Runnable {
+
     private final BufferedReader in;
     private final Client client;
 
