@@ -7,7 +7,9 @@ public enum MessageKey {
     MESSAGE("message"),
     X("x"),
     Y("y"),
-    COLOR("color"),
+    RED("red"),
+    GREEN("green"),
+    BLUE("blue"),
     SIZE("size");
 
     private final String key;

@@ -14,7 +14,7 @@ public class ServerUtils {
         }
     }
 
-    public static void isNameAllowed(String username, ArrayList<String> bannedwords, ArrayList<String> players) throws InvalidUsernameException {
+    public static void isNameAllowed(String username, List<String> bannedwords, List<String> players) throws InvalidUsernameException {
         username = username.toLowerCase();
         for (String existingName : players){
             if (existingName.equals(username)) throw new InvalidUsernameException("User with this name exists.");

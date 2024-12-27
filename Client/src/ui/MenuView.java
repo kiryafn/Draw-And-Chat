@@ -1,11 +1,9 @@
 package ui;
 
-import data.Fonts;
-import data.Pallet;
+import data.enums.Pallet;
 
 import javax.swing.*;
 import java.awt.*;
-import java.security.KeyStore;
 
 
 public class MenuView extends JFrame {

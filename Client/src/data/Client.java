@@ -2,10 +2,7 @@ package data;
 
 import domain.MessageListener;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.net.ConnectException;
@@ -24,7 +21,6 @@ public class Client {
     private PrintWriter out;
     private final String serverAddress = "127.0.0.1";
     private final int port = 12345;
-
     /**
      * Initializes a new Client instance, which establishes a connection
      * to the server using the configured server address and port.
@@ -38,9 +34,9 @@ public class Client {
 
             socket = new Socket(serverAddress, port);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new PrintWriter(socket.getOutputStream(), true);
+            out = new PrintWriter(socket.getOutputStream());
 
-            messageListenerExecutor.submit(new MessageListener(in,this));
+            messageListenerExecutor.execute(new MessageListener(in,this));
 
         } catch (UnknownHostException e) {
             System.err.println("The IP address of the host could not be determined");
@@ -55,6 +51,10 @@ public class Client {
             System.err.println("An I/O error occurred");
             messageListenerExecutor.shutdown();
         }
+    }
+
+    public void sendMessage(String message) {
+            out.println(message);
     }
 
     /**

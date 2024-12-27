@@ -1,6 +1,8 @@
 package ui;
 
 import data.ChatContract;
+import domain.ChatModel;
+import domain.ChatPresenter;
 
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
@@ -10,9 +12,11 @@ import javax.swing.text.StyledDocument;
 import java.awt.*;
 
 public class ChatView extends JPanel implements ChatContract.View {
-    private JTextPane  chatArea   = new JTextPane();;
+    private JTextPane  chatArea   = new JTextPane();
     private JTextField inputField = new JTextField();
     private JButton    sendButton = new JButton("Send");
+
+    public ChatPresenter presenter = new ChatPresenter(this, new ChatModel());
 
     public ChatView() {
         setLayout(new BorderLayout());
@@ -23,12 +27,17 @@ public class ChatView extends JPanel implements ChatContract.View {
         JScrollPane scrollPane = new JScrollPane(chatArea);
         add(scrollPane, BorderLayout.CENTER);
 
-        // 2. Панель для ввода сообщений
         JPanel inputPanel = new JPanel(new BorderLayout());
 
         inputPanel.add(inputField, BorderLayout.CENTER);
         inputPanel.add(sendButton, BorderLayout.EAST);
         add(inputPanel, BorderLayout.SOUTH);
+
+        sendButton.addActionListener(e -> {
+            // Add appropriate logic here, for instance:
+            presenter.onSendMessage(inputField.getText());
+        });
+
     }
 
     @Override
@@ -39,7 +48,7 @@ public class ChatView extends JPanel implements ChatContract.View {
         StyleConstants.setForeground(prefixStyle, prexif_color);
         StyleConstants.setBold(prefixStyle, true);
 
-        Style senderStyle = chatArea.addStyle("MessageStyle", null);
+        Style senderStyle = chatArea.addStyle("SenderStyle", null);
         StyleConstants.setForeground(senderStyle, sender_color);
 
         Style messageStyle = chatArea.addStyle("MessageStyle", null);
@@ -56,6 +65,11 @@ public class ChatView extends JPanel implements ChatContract.View {
 
     @Override
     public void clearInput() {
+        inputField.setText("");
+    }
 
+    @Override
+    public void addListeners(){
+        sendButton.addActionListener(e -> {showMessage();})
     }
 }

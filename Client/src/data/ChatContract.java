@@ -1,5 +1,4 @@
 package data;
-import Common.domain.*;
 import java.awt.*;
 
 public interface ChatContract {
@@ -7,13 +6,19 @@ public interface ChatContract {
         void showMessage(String prefix, Color prexif_color, String sender, Color sender_color, String message, Color message_color);
 
         void clearInput();
+
+        void addListeners();
     }
 
     interface Presenter {
-        void onClick();
+        void onSendMessage(Client client, String message);
+
+        void initListeners();
+
+        void drawMessage(String prefix, Color prexif_color, String sender, Color sender_color, String message, Color message_color);
     }
 
     interface Model {
-        void sendMessage(String message);
+        void sendMessage(Client client, String message);
     }
 }

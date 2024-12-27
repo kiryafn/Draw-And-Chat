@@ -4,10 +4,7 @@ import data.exceptions.InvalidUsernameException;
 import data.Server;
 import domain.ServerUtils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 
 public class ClientHandler implements Runnable {
@@ -22,8 +19,8 @@ public class ClientHandler implements Runnable {
         this.server = server;
 
         try {
-            out = new PrintWriter(this.clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            out = new PrintWriter(clientSocket.getOutputStream());
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
@@ -34,7 +31,8 @@ public class ClientHandler implements Runnable {
         try {
 
             String clientName = in.readLine();
-            ServerUtils.isNameAllowed(clientName);
+            ServerUtils.isNameAllowed(clientName, server.chatService.banWords, server.getConnectedClients().keySet());
+
 
             String message;
             while ((message = in.readLine()) != null) {
